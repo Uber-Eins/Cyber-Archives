@@ -1,4 +1,4 @@
-mixed-port: 7890
+mixed-port: 11451
 allow-lan: true
 bind-address: "*"
 mode: rule
@@ -8,7 +8,7 @@ external-controller: 127.0.0.1:9090
 hosts:
   #dns.emir-eins.ink: 192.168.1.254
 
-  # ======= steam++ ======= #
+  # ======= Steam++ ======= #
   steam-chat.com: 127.0.0.1
   steamcdn-a.akamaihd.net: 127.0.0.1
   cdn.akamai.steamstatic.com: 127.0.0.1
@@ -25,8 +25,9 @@ profile:
   store-selected: false
   store-fake-ip: true
 nameserver:
-  - tls://dns.emir-eins.ink:50853
-  - https://dns.emir-eins.ink:50443/dns-query
+  - 119.29.29.29
+  #- tls://dns.emir-eins.ink:50853
+  #- https://dns.emir-eins.ink:50443/dns-query
 proxy-providers:
 
 proxy-groups:
@@ -171,7 +172,12 @@ rules:
   - DOMAIN,passport.bilibili.com,🇺🇸 美国节点
   - DOMAIN-SUFFIX,akamaized.net,☠️ 墙国内网
   - DOMAIN-SUFFIX,steamcontent.com,☠️ 墙国内网
-
+  
+  - DOMAIN-SUFFIX,local,DIRECT
+  - IP-CIDR,203.107.1.1/24,REJECT
+  - IP-CIDR,183.240.197.130/32,DIRECT
+  
+  # ======= Steam++ ======= #
   - DOMAIN,steam-chat.com,DIRECT
   - DOMAIN,steamcdn-a.akamaihd.net,DIRECT
   - DOMAIN,cdn.akamai.steamstatic.com,DIRECT
@@ -184,11 +190,7 @@ rules:
   - DOMAIN,steamcommunity.com,DIRECT
   - DOMAIN,www.steamcommunity.com,DIRECT
   - DOMAIN,local.steampp.net,DIRECT
-  
-  - DOMAIN-SUFFIX,local,DIRECT
-  - IP-CIDR,203.107.1.1/24,REJECT
-  - IP-CIDR,183.240.197.130/32,DIRECT
-  
+  # ======= 规则订阅 ======= #
   - RULE-SET,Direct,☠️ 墙国内网
   - RULE-SET,Advertising,REJECT
   - RULE-SET,Hijacking,REJECT
