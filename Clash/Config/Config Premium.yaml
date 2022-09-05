@@ -6,9 +6,9 @@ log-level: info
 ipv6: true
 external-controller: 127.0.0.1:9090
 hosts:
-  dns.emir-eins.ink: 192.168.1.254
-  aio-v6.emir-eins.ink: 240e:37a:e8e:6400:a06e:2d3c:39a7:dbe5
-  #"*.emir-cluste": 192.168.1.254
+  #dns.emir-eins.ink: 192.168.1.254
+
+  # ======= steam++ ======= #
   steam-chat.com: 127.0.0.1
   steamcdn-a.akamaihd.net: 127.0.0.1
   cdn.akamai.steamstatic.com: 127.0.0.1
@@ -28,60 +28,7 @@ nameserver:
   - tls://dns.emir-eins.ink:50853
   - https://dns.emir-eins.ink:50443/dns-query
 proxy-providers:
-  SubStore-Clash:
-    type: http
-    url: https://gitexpedite.emir-eins.ink/https://gist.githubusercontent.com/Uber-Eins/43b3a5f9c8079cc6219d65db7643546f/raw/SubStore-Clash
-    interval: 86400
-    path: ./SubStore-Clash.yaml
-    health-check:
-      enable: true
-      interval: 300
-      url: http://captive.apple.com/generate_204
-  SubStore-Clash.HK:
-    type: http
-    url: https://gitexpedite.emir-eins.ink/https://gist.githubusercontent.com/Uber-Eins/43b3a5f9c8079cc6219d65db7643546f/raw/SubStore-Clash.HK
-    interval: 86400
-    path: ./SubStore-Clash.HK.yaml
-    health-check:
-      enable: true
-      interval: 300
-      url: http://captive.apple.com/generate_204
-  SubStore-Clash.TW:
-    type: http
-    url: https://gitexpedite.emir-eins.ink/https://gist.githubusercontent.com/Uber-Eins/43b3a5f9c8079cc6219d65db7643546f/raw/SubStore-Clash.TW
-    interval: 86400
-    path: ./SubStore-Clash.TW.yaml
-    health-check:
-      enable: true
-      interval: 300
-      url: http://captive.apple.com/generate_204
-  SubStore-Clash.SG:
-    type: http
-    url: https://gitexpedite.emir-eins.ink/https://gist.githubusercontent.com/Uber-Eins/43b3a5f9c8079cc6219d65db7643546f/raw/SubStore-Clash.SG
-    interval: 86400
-    path: ./SubStore-Clash.SG.yaml
-    health-check:
-      enable: true
-      interval: 300
-      url: http://captive.apple.com/generate_204
-  SubStore-Clash.JP:
-    type: http
-    url: https://gitexpedite.emir-eins.ink/https://gist.githubusercontent.com/Uber-Eins/43b3a5f9c8079cc6219d65db7643546f/raw/SubStore-Clash.JP
-    interval: 86400
-    path: ./SubStore-Clash.JP.yaml
-    health-check:
-      enable: true
-      interval: 300
-      url: http://captive.apple.com/generate_204
-  SubStore-Clash.US:
-    type: http
-    url: https://gitexpedite.emir-eins.ink/https://gist.githubusercontent.com/Uber-Eins/43b3a5f9c8079cc6219d65db7643546f/raw/SubStore-Clash.US
-    interval: 86400
-    path: ./SubStore-Clash.US.yaml
-    health-check:
-      enable: true
-      interval: 300
-      url: http://captive.apple.com/generate_204
+
 proxy-groups:
   - name: 🌎 全球加速
     type: select
