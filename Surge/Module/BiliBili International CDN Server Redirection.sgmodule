@@ -1,5 +1,5 @@
 #!name = BiliBili海外CDN服务器重定向
-#!desc = 强制使用国内视频播放服务器[建议配合"https://github.com/BiliUniverse/Universe/wiki/%F0%9F%8C%90-Global"使用]
+#!desc = 强制使用国内视频播放服务器[建议配合"哔哩万象"使用]
 
 [General]
 force-http-engine-hosts = %APPEND% upos-hz-mirrorakam.akamaized.net:80,*.bilivideo.com:80
