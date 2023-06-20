@@ -1,1 +1,1 @@
-# 自用向的Clash/QX规则与配置
+# 自用向的Clash/Surge规则与配置
