@@ -1,0 +1,456 @@
+# 此规则只兼容Clash.Meta分支,不兼容Clash以及Clash Premium分支!!!
+# Clash.Meta官网 https://wiki.metacubex.one
+
+# 支持 Clash.Meta 的客户端
+# 推荐clash-verge,本配置的环境就是用的这个,且同时支持Windows/MacOS/Linux
+# Windows:
+  #clash-verge https://github.com/zzzgydi/clash-verge
+  #ClashMetaForWindows_Mini https://github.com/kogekiplay/ClashMetaForWindows_Mini
+  #clashN https://github.com/2dust/clashN
+  #v2rayN https://github.com/2dust/v2rayN
+  #Clash.Mini https://github.com/MetaCubeX/Clash.Mini
+
+# Mac OS:
+  #clash-verge https://github.com/zzzgydi/clash-verge
+  #ClashX.Meta https://github.com/MetaCubeX/ClashX.Meta
+
+# Linux:
+  #clash-verge https://github.com/zzzgydi/clash-verge
+
+# 其他客户端,如OpenWRT,Android,IOS,Shell请前往官网自行查看
+
+
+# 完整版配置文件说明:https://github.com/MetaCubeX/Clash.Meta/blob/Meta/docs/config.yaml
+
+### 端口设置
+#! 一般会被GUI覆盖
+# port: 6152          # HTTP(S) 代理服务器端口
+# socks-port: 6153    # SOCKS5 代理端口
+# redir-port: 6154    # 透明代理端口，用于 Linux 和 MacOS
+mixed-port: 6155      # HTTP(S) 和 SOCKS 代理混合端口
+
+### 局域网连接设置
+allow-lan: true
+bind-address: "*"
+
+### 进程匹配模式 [always|strict|off]
+#! always, 开启,强制匹配所有进程
+#! strict, 默认,由 clash 判断是否开启
+#! off, 不匹配进程,推荐在路由器上使用此模式
+# find-process-mode: strict
+
+### 模式设置
+mode: rule
+
+### 日志等级 [silent|error|warning|info|debug]
+log-level: debug
+
+### 开启 IPv6 总开关,关闭阻断所有 IPv6 链接和屏蔽 DNS 请求 AAAA 记录
+ipv6: true
+
+### TCP 并发
+#! TCP 并发连接所有 IP, 将使用最快握手的 TCP
+tcp-concurrent: true
+
+### 全局 TLS 指纹，优先低于 proxy 内的 client-fingerprint
+#! 选项: ["chrome"|"firefox"|"safari"|"ios"|"random"|"none"]
+global-client-fingerprint: "random"
+
+### WebUI监听端口
+external-controller: 127.0.0.1:62382
+
+### hosts设置
+hosts:
+  # >>> DNS::腾讯 <<< #
+  #'doh.pub': 1.12.12.12
+  #'doh.pub': 120.53.53.53
+  # >>> DNS::阿里 <<< #
+  #'dns.alidns.com': 223.5.5.5
+  #'dns.alidns.com': 223.6.6.6
+  #"dns.alidns.com": '2400:3200::1'
+  #"dns.alidns.com": '2400:3200:baba::1'
+
+profile:
+  store-selected: true  # 存储 select 选择记录
+  store-fake-ip: false   # 持久化 fake-ip
+
+### 自定义GEODATA设置
+geodata-mode: true
+geox-url:
+  geoip: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geosite: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  mmdb: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
+
+### Tun设置
+tun:
+  enable: true
+  #! TCP/IP 栈 [system|gvisor|lwip]
+  #! system:有时性能更好
+  #! gvisor:兼容性较好
+  #! lwip:基本上寄了
+  stack: system
+  dns-hijack:
+    - 0.0.0.0:53
+  auto-detect-interface: true   # 自动识别出口网卡
+  auto-route: true              # 配置路由表
+  mtu: 1450                     # 最大传输单元
+  # strict-route: true          # 将所有连接路由到tun来防止泄漏,但你的设备将无法其他设备被访问
+
+### DNS配置
+dns:
+  enable: true
+  ipv6: true
+  prefer-h3: true               # 开启 DoH 支持 HTTP/3,将并发尝试
+  ipv6-timeout: 300             # 单位:ms,内部双栈并发时,向上游查询 AAAA 时,等待 AAAA 的时间，默认 100ms
+  listen: 198.18.0.1:53         # 开启 DNS 服务器监听
+  #! 用于解析nameserver,fallback以及其他DNS服务器配置的DNS服务域名
+  default-nameserver:
+    #! DNS
+    - 223.5.5.5                         # 中国大陆::阿里
+    - 119.29.29.29                      # 中国大陆::腾讯
+    #- 1.1.1.1                          # 环大陆::Cloudflare
+    #- 8.8.8.8                          # 环大陆::Google
+    #- 9.9.9.9                          # 环大陆::Quad9
+    #! DNS-over-TLS
+    #! 通过传输层安全协议(TLS)来加密并打包域名系统(DNS)的安全协议。此协议旨在防止中间人攻击与控制DNS数据以保护用户隐私。
+    #! 中国大陆地区无效
+    - tls://223.5.5.5                   # 中国大陆::阿里
+    - tls://223.6.6.6                   # 中国大陆::阿里
+    - tls://1.12.12.12                  # 中国大陆::腾讯
+    - tls://120.53.53.53                # 中国大陆::腾讯
+    #-tls://1.1.1.1                     # 环大陆::Cloudflare
+    #-tls://1.0.0.1                     # 环大陆::Cloudflare
+    #-tls://8.8.8.8                     # 环大陆::Google
+    #-tls://8.8.4.4                     # 环大陆::Google
+    #-tls://185.222.222.222             # 环大陆::DNS.SB
+    #-tls://185.184.222.222             # 环大陆::DNS.SB
+    #-tls://9.9.9.9                     # 环大陆::Quad9
+    #-tls://149.112.112.10              # 环大陆::Quad9
+    #- system                           # 特殊::使用系统默认 (在一些版本的核心上可能会报错)
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/15
+  use-hosts: true # 查询 hosts
+  #! 配置不使用fake-ip的域名
+  fake-ip-filter:
+    - +.stun.*.*
+    - +.stun.*.*.*
+    - +.stun.*.*.*.*
+    - +.stun.*.*.*.*.*
+    - "*.n.n.srv.nintendo.net"
+    - +.stun.playstation.net
+    - xbox.*.*.microsoft.com
+    - "*.*.xboxlive.com"
+    - "*.msftncsi.com"
+    - "*.msftconnecttest.com"
+    - WORKGROUP
+  #! DNS主要域名配置 [UDP|TCP|DoT|DoH|DoQ]
+  #! 这部分为主要 DNS 配置，影响所有直连，确保使用对大陆解析精准的 DNS
+  nameserver:
+    #! DNS
+    #- 223.5.5.5                         # 中国大陆::阿里
+    #- 119.29.29.29                      # 中国大陆::腾讯
+    #- 1.1.1.1                          # 环大陆::Cloudflare
+    #- 8.8.8.8                          # 环大陆::Google
+    #- 9.9.9.9                          # 环大陆::Quad9
+
+    #! DNS-over-TLS
+    #! 通过传输层安全协议(TLS)来加密并打包域名系统(DNS)的安全协议。此协议旨在防止中间人攻击与控制DNS数据以保护用户隐私。
+    #! 中国大陆地区无效
+    #- tls://223.5.5.5                   # 中国大陆::阿里
+    #- tls://223.6.6.6                   # 中国大陆::阿里
+    #- tls://1.12.12.12                  # 中国大陆::腾讯
+    #- tls://120.53.53.53                # 中国大陆::腾讯
+    #-tls://1.1.1.1                     # 环大陆::Cloudflare
+    #-tls://1.0.0.1                     # 环大陆::Cloudflare
+    #-tls://8.8.8.8                     # 环大陆::Google
+    #-tls://8.8.4.4                     # 环大陆::Google
+    #-tls://185.222.222.222             # 环大陆::DNS.SB
+    #-tls://185.184.222.222             # 环大陆::DNS.SB
+    #-tls://9.9.9.9                     # 环大陆::Quad9
+    #-tls://149.112.112.10              # 环大陆::Quad9
+    
+    #! DNS-over-HTTP
+    #- "https://dns.alidns.com/dns-query"
+    #- "https://doh.pub/dns-query"
+
+    - system
+  fallback: []
+  #! 专用于节点域名解析的 DNS 服务器，非必要配置项
+  #! 配置服务器若查询失败将使用 nameserver
+  # proxy-server-nameserver:
+  # - https://dns.google/dns-query
+  # - tls://one.one.one.one
+
+use: &All-Subscriptions
+  type: select
+  use:
+    - 订阅的名字,必须与下面的一样          # 需要修改
+    - Subscription2                      # 如果有多个订阅就换行输入第二个的名字，如Subscription2所示，如果没有，就删除本行和下面的Subscription2
+
+# 全部的订阅组
+proxy-providers:
+  订阅的名字,建议与下面的一样:    # 需要修改
+    type: http
+    url: "订阅的URL"            # 需要修改
+    interval: 86400
+    path: ./Clash.Meta/Subscribe/订阅的名字,建议与上面的一样.yaml # 需要修改
+    health-check:
+      enable: true
+      interval: 300
+      url: http://www.apple.com/library/test/success.html
+  
+  # 示例，需要删除
+  Subscription2:    
+    type: http
+    url: "https://Subscription2.com/114514"            
+    interval: 86400
+    path: ./Clash.Meta/Subscribe/Subscription2.yaml
+    health-check:
+      enable: true
+      interval: 300
+      url: http://www.apple.com/library/test/success.html
+
+# 示例，手动添加代理
+proxies:
+  - {"name":"🖧 Clash.Meta","type":"socks5","server":"127.0.0.1","port":6155,"udp":true}
+
+proxy-groups:
+  - name: "🌎 全球加速"
+    type: select
+    proxies:
+      - ♻️ 自动选择
+      - 🎯 手动选择
+      - 🚀 专线节点
+      - 🇭🇰 香港节点
+      - 🇹🇼 台湾节点
+      - 🇸🇬 狮城节点
+      - 🇯🇵 日本节点
+      - 🇺🇸 美国节点
+  - name: "🎯 手动选择"
+    type: select
+    proxies:
+      - 🖧 Clash.Meta
+    <<: *All-Subscriptions
+  - name: "🎭 黑白名单"
+    type: select
+    proxies:
+      - 🌎 全球加速
+      - DIRECT
+  # 国际媒体
+  - name: "📽 国际媒体"
+    type: select
+    proxies:
+      - 🌎 全球加速
+      - 🇭🇰 香港节点
+      - 🇹🇼 台湾节点
+      - 🇸🇬 狮城节点
+      - 🇯🇵 日本节点
+      - 🇺🇸 美国节点
+  # 巨硬服务
+  - name: "🗄️ 巨硬服务"
+    type: select
+    proxies:
+      - 🌎 全球加速
+      - 🇭🇰 香港节点
+      - 🇹🇼 台湾节点
+      - 🇸🇬 狮城节点
+      - 🇯🇵 日本节点
+      - 🇺🇸 美国节点
+  # 游戏加速
+  - name: "🎮 游戏加速"
+    type: select
+    proxies:
+      - 🌎 全球加速
+      - 🎯 手动选择
+    <<: *All-Subscriptions
+    filter: "游戏"
+  # 港台番剧
+  - name: "📺 港台番剧"
+    type: select
+    proxies:
+      - DIRECT
+      - 🇭🇰 香港节点
+      - 🇹🇼 台湾节点
+  ##### 自动测速节点 #####
+  - name: "♻️ 自动选择"
+    type: url-test
+    <<: *All-Subscriptions
+    filter: "^((?!(试用|剩余|重置|到期|游戏|更新|海外|IPLC)).)*$"
+    url: 'https://www.apple.com/library/test/success.html'
+    interval: 300
+
+  - name: "🚀 专线节点"
+    type: url-test
+    <<: *All-Subscriptions
+    filter: "(?=.*(IPLC))^((?!(试用|游戏)).)*$"
+    url: 'https://www.apple.com/library/test/success.html'
+    interval: 300
+
+  - name: "🇭🇰 香港节点"
+    type: url-test
+    <<: *All-Subscriptions
+    filter: "(?=.*(港|HK|(?i)Hong))^((?!(台|日|韩|新|美|游戏)).)*$"
+    url: 'https://www.apple.com/library/test/success.html'
+    interval: 300
+
+  - name: "🇹🇼 台湾节点"
+    type: url-test
+    <<: *All-Subscriptions
+    filter: "(?=.*(台|TW|(?i)Taiwan))^((?!(港|日|韩|新|美|海外)).)*$"
+    url: 'https://www.apple.com/library/test/success.html'
+    interval: 300
+
+  - name: "🇸🇬 狮城节点"
+    type: url-test
+    <<: *All-Subscriptions
+    filter: "(?=.*(新|狮|獅|SG|(?i)Singapore))^((?!(港|台|日|韩|美|新西兰)).)*$"
+    url: 'https://www.apple.com/library/test/success.html'
+    interval: 300
+
+  - name: "🇯🇵 日本节点"
+    type: url-test
+    <<: *All-Subscriptions
+    filter: "(?=.*(日|JP|(?i)Japan))^((?!(港|台|韩|新|美|游戏)).)*$"
+    url: 'https://www.apple.com/library/test/success.html'
+    interval: 300
+
+  - name: "🇺🇸 美国节点"
+    type: url-test
+    <<: *All-Subscriptions
+    filter: "(?=.*(美|US|(?i)States|American))^((?!(港|台|日|韩|新|亚美尼亚)).)*$"
+    url: 'https://www.apple.com/library/test/success.html'
+    interval: 300
+
+rule-providers:
+  # 去广告
+  Advertising:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Advertising/Advertising_Classical.yaml"
+    path: ./Clash.Meta/Rule/Advertising.yaml
+    interval: 86400
+  Anti-AD:
+    type: http
+    behavior: domain
+    url: "https://anti-ad.net/clash.yaml"
+    path: ./Clash.Meta/Rule/Anti-AD.yaml
+    interval: 86400
+  # 国际媒体
+  YouTube:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/YouTube/YouTube.yaml"
+    path: ./Clash.Meta/Rule/YouTube.yaml
+    interval: 86400
+  Bahamut:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Bahamut/Bahamut.yaml"
+    path: ./Clash.Meta/Rule/Bahamut.yaml
+    interval: 86400
+  Bilibili:
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/ALyCE233/Bili-UPOS-Roaming/main/BiliBili-Clash.yml"
+    path: ./Clash.Meta/Rule/Bilibili.yaml
+    interval: 86400
+  # 巨硬服务
+  Bing:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Bing/Bing.yaml"
+    path: ./Clash.Meta/Rule/Bing.yaml
+    interval: 86400
+  MicrosoftEdge:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/MicrosoftEdge/MicrosoftEdge.yaml"
+    path: ./Clash.Meta/Rule/MicrosoftEdge.yaml
+    interval: 86400
+  OneDrive:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OneDrive/OneDrive.yaml"
+    path: ./Clash.Meta/Rule/OneDrive.yaml
+    interval: 86400
+  # 游戏
+  Epic:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Epic/Epic.yaml"
+    path: ./Clash.Meta/Rule/Epic.yaml
+    interval: 86400
+  # 下载
+  下载:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Download/Download.yaml"
+    path: ./Clash.Meta/Rule/Download.yaml
+    interval: 86400
+  # 本地局域网地址
+  LAN:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan.yaml"
+    path: ./Clash.Meta/Rule/LAN.yaml
+    interval: 86400
+  # 中国大陆
+  China:
+    type: http
+    behavior: domain
+    url: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/cn_domain.yaml"
+    path: ./Clash.Meta/Rule/China.yaml
+    interval: 86400
+
+rules:
+  ### ======= 本地屏蔽 ======= ###
+  - IP-CIDR,203.107.1.0/24,REJECT,no-resolve
+  - IP-CIDR,118.89.204.198/23,REJECT,no-resolve
+  - IP-CIDR,119.29.29.98/32,REJECT,no-resolve
+  - IP-CIDR6,2402:4e00:1200:ed00:0:9089:6dac:96b6/40,REJECT,no-resolve
+
+  ### ======= 本地测试 ======= ###
+
+  ### ======= 微软网络连接测试 ======= ###
+  - DOMAIN,dns.msftncsi.com,DIRECT
+  - DOMAIN,www.msftncsi.com,DIRECT
+  - DOMAIN,www.msftconnecttest.com,DIRECT
+  - DOMAIN,ipv6.msftconnecttest.com,DIRECT
+
+  ### ======= Steam ======= ###
+  - DOMAIN-SUFFIX,steamcommunity.com,🎮 游戏加速
+  - DOMAIN-SUFFIX,cm.steampowered.com,DIRECT
+  - DOMAIN-SUFFIX,steamserver.net,DIRECT
+
+  ### ======= RULE-SET ======= ###
+  - RULE-SET,Advertising,REJECT
+  - RULE-SET,Anti-AD,REJECT
+  - RULE-SET,YouTube,📽 国际媒体
+  - RULE-SET,Bahamut,🇹🇼 台湾节点
+  - RULE-SET,Bilibili,📺 港台番剧
+  - RULE-SET,Bing,🗄️ 巨硬服务
+  - RULE-SET,MicrosoftEdge,🗄️ 巨硬服务
+  - RULE-SET,OneDrive,🗄️ 巨硬服务
+  - RULE-SET,Epic,🎮 游戏加速
+  - RULE-SET,HSR,🎮 游戏加速,no-resolve
+  - RULE-SET,LAN,DIRECT
+  - RULE-SET,China,DIRECT
+
+  ### ======= GEOSITE ======= ###
+  - GEOSITE,Category-Ads-All,REJECT
+  #- GEOSITE,Tracker,REJECT
+  - GEOSITE,Win-Spy,REJECT
+  #- GEOSITE,Win-Extra,REJECT
+  - GEOSITE,Apple-CN,DIRECT
+  #- GEOSITE,Microsoft@CN,DIRECT
+  - GEOSITE,Steam@CN,DIRECT
+  - GEOSITE,CN,DIRECT
+  
+  ### ======= GEOIP ======= ###
+  - GEOIP,CN,DIRECT,no-resolve
+
+  ### ======= P2P下载 ======= ###
+  - RULE-SET,Download,DIRECT
+  
+  ### ======= 其他 ======= ###
+  - MATCH,🎭 黑白名单
