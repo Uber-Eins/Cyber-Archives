@@ -1,0 +1,84 @@
+### 结合 Clash.Meta Config - Merge.yaml 使用
+## 使用方法: Clash Verge -> 配置 -> 右上角新建 -> 类型选择 Merge,复制粘贴下面内容并按照注释修改/添加
+## 重要: Subscription-X 只有0-7,如需要更多/更少的订阅数量或是自定义订阅组名,请自行对 Clash.Meta Config - Merge.yaml 进行修改!
+
+proxy-providers:
+  Subscription-0:
+    type: http
+    url: ""                                                   # 在此处填入你的clash订阅链接
+    interval: 3600                                            # 更新时间间隔,单位秒(默认即可)
+    path: "./RemoteResources/Subscribe/Subscription-0.yaml"   # 文件的保存路径(默认即可)
+    health-check:
+      enable: true
+      interval: 86400
+      url: "https://cp.cloudflare.com"
+
+  Subscription-1:
+    type: http
+    url: ""
+    interval: 3600
+    path: "./RemoteResources/Subscribe/Subscription-1.yaml"
+    health-check:
+      enable: true
+      interval: 86400
+      url: "https://cp.cloudflare.com"
+
+  Subscription-2:
+    type: http
+    url: ""
+    interval: 3600
+    path: "./RemoteResources/Subscribe/Subscription-2.yaml"
+    health-check:
+      enable: true
+      interval: 86400
+      url: "https://cp.cloudflare.com"
+
+  Subscription-3:
+    type: http
+    url: ""
+    interval: 3600
+    path: "./RemoteResources/Subscribe/Subscription-3.yaml"
+    health-check:
+      enable: true
+      interval: 86400
+      url: "https://cp.cloudflare.com"
+
+  Subscription-4:
+    type: http
+    url: ""
+    interval: 3600
+    path: "./RemoteResources/Subscribe/Subscription-4.yaml"
+    health-check:
+      enable: true
+      interval: 86400
+      url: "https://cp.cloudflare.com"
+
+  Subscription-5:
+    type: http
+    url: ""
+    interval: 3600
+    path: "./RemoteResources/Subscribe/Subscription-5.yaml"
+    health-check:
+      enable: true
+      interval: 86400
+      url: "https://cp.cloudflare.com"
+
+  Subscription-6:
+    type: http
+    url: ""
+    interval: 3600
+    path: "./RemoteResources/Subscribe/Subscription-6.yaml"
+    health-check:
+      enable: true
+      interval: 86400
+      url: "https://cp.cloudflare.com"
+
+  Subscription-7:
+    type: http
+    url: ""
+    interval: 3600
+    path: "./RemoteResources/Subscribe/Subscription-7.yaml"
+    health-check:
+      enable: true
+      interval: 86400
+      url: "https://cp.cloudflare.com"
