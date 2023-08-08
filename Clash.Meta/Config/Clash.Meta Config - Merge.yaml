@@ -181,7 +181,14 @@ dns:
 
 use: &All-Subscriptions
   use:
-    - Subscription
+    - Subscription-0
+    - Subscription-1
+    - Subscription-2
+    - Subscription-3
+    - Subscription-4
+    - Subscription-5
+    - Subscription-6
+    - Subscription-7
 
 proxy-providers:
 
