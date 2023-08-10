@@ -421,16 +421,13 @@ rule-providers:
 
 rules:
   ### ======= 本地屏蔽 ======= ###
-  - DOMAIN,log-upload-os.hoyoverse.com,REJECT
+  - IP-CIDR,118.89.204.198/23,REJECT,no-resolve
+  - IP-CIDR,119.29.29.98/32,REJECT,no-resolve
+  - IP-CIDR,203.107.1.0/24,REJECT,no-resolve
+  - IP-CIDR6,2402:4e00:1200:ed00:0:9089:6dac:96b6/40,REJECT,no-resolve
 
   ### ======= 本地测试 ======= ###
-  - DOMAIN,epicgames-download1.akamaized.net,☠️ 墙国内网
-  - DOMAIN,sukebei.tracker.wf,🌎 全球加速
-  - DOMAIN-SUFFIX,emir.clunet,☠️ 墙国内网
-  #- DOMAIN-SUFFIX,sharepoint.com,☠️ 墙国内网
-  - DOMAIN-SUFFIX,acg.rip,🌎 全球加速
-  - DOMAIN-SUFFIX,microsoft.com,🗄️ 巨硬服务
-  - PROCESS-NAME,WinStore.App.exe,🗄️ 巨硬服务
+
   ### ======= 微软网络连接测试 ======= ###
   - DOMAIN,dns.msftncsi.com,☠️ 墙国内网
   - DOMAIN,www.msftncsi.com,☠️ 墙国内网
