@@ -3,6 +3,7 @@ payload:
   - DOMAIN,hkrpg-log-upload-os.hoyoverse.com
   - DOMAIN,log-upload-os.hoyoverse.com
   - DOMAIN,ocsp.digicert.com
+  - DOMAIN,report.url.cn
   - DOMAIN,upload-os-bbs.hoyolab.com
   - DOMAIN-SUFFIX,anticheatexpert.com
   - DOMAIN-SUFFIX,events.data.microsoft.com
