@@ -7,7 +7,9 @@ payload:
   - DOMAIN,upload-os-bbs.hoyolab.com
   - DOMAIN-SUFFIX,anticheatexpert.com
   - DOMAIN-SUFFIX,events.data.microsoft.com
+  - IP-CIDR,0.0.0.0/32,REJECT
   - IP-CIDR,203.107.1.0/24,no-resolve
   - IP-CIDR,118.89.204.198/23,no-resolve
   - IP-CIDR,119.29.29.98/32,no-resolve
+  - IP-CIDR6,::/128,REJECT
   - IP-CIDR6,2402:4e00:1200:ed00:0:9089:6dac:96b6/40,no-resolve
