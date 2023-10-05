@@ -4,7 +4,6 @@ payload:
   - DOMAIN,log-upload-os.hoyoverse.com
   - DOMAIN,ocsp.digicert.com
   - DOMAIN,report.url.cn
-  - DOMAIN,upload-os-bbs.hoyolab.com
   - DOMAIN-SUFFIX,anticheatexpert.com
   - DOMAIN-SUFFIX,events.data.microsoft.com
   - IP-CIDR,0.0.0.0/32,REJECT
