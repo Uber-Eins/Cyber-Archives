@@ -1,0 +1,14 @@
+#!name = BiliBili服务器重定向
+#!desc = 重定向CDN,包括海外的以及PCDN[建议配合"哔哩万象"使用]
+
+[General]
+force-http-engine-hosts = %APPEND% upos-hz-mirrorakam.akamaized.net:80,*.bilivideo.com:80,<ip-address>:4480,<ip-address>:4483
+
+[Rule]
+OR,((DOMAIN-KEYWORD,pcdn), (DOMAIN-SUFFIX,szbdyd.com)),REJECT-NO-DROP
+
+[URL Rewrite]
+^http(s)?:\/\/upos-hz-mirrorakam\.akamaized\.net https://upos-sz-mirrorcos.bilivideo.com header
+^http(s)?:\/\/cn-hk-eq(-bcache)?-([0-9]\d*-[0-9]\d*|[0-9]\d*)\.bilivideo\.com https://upos-sz-mirrorcos.bilivideo.com header
+^http(s)?:\/\/upos-sz-mirror(cosov|aliov)\.bilivideo\.com https://upos-sz-mirrorcos.bilivideo.com header
+^http(s)?:\/\/((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?):(4480|4483) https://upos-sz-mirrorcos.bilivideo.com header
