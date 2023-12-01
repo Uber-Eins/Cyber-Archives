@@ -2,13 +2,18 @@
 #!desc = 重定向CDN,包括海外的以及PCDN[建议配合"哔哩万象"使用]
 
 [General]
-force-http-engine-hosts = %APPEND% upos-hz-mirrorakam.akamaized.net:80,*.bilivideo.com:80,<ip-address>:4480,<ip-address>:4483
+force-http-engine-hosts = %APPEND% upos-hz-mirrorakam.akamaized.net:80,upos-bstar1-mirrorakam.akamaized.net:80,*.bilivideo.cn:80,*.bilivideo.com:80,<ip-address>:4480,<ip-address>:4483
 
 [Rule]
-OR,((DOMAIN-KEYWORD,pcdn), (DOMAIN-SUFFIX,szbdyd.com)),REJECT-NO-DROP
+OR,((AND,((OR,((DEST-PORT,4480), (DEST-PORT,4483), (DEST-PORT,8000), (DEST-PORT,8082))), (IP-CIDR,0.0.0.0/0,no-resolve))), (DOMAIN-KEYWORD,pcdn), (DOMAIN-SUFFIX,szbdyd.com)),REJECT-NO-DROP // 禁用B站PCDN
 
 [URL Rewrite]
-^http(s)?:\/\/upos-hz-mirrorakam\.akamaized\.net https://upos-sz-mirrorcos.bilivideo.com header
-^http(s)?:\/\/cn-hk-eq(-bcache)?-([0-9]\d*-[0-9]\d*|[0-9]\d*)\.bilivideo\.com https://upos-sz-mirrorcos.bilivideo.com header
-^http(s)?:\/\/upos-sz-mirror(cosov|aliov)\.bilivideo\.com https://upos-sz-mirrorcos.bilivideo.com header
-^http(s)?:\/\/((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?):(4480|4483) https://upos-sz-mirrorcos.bilivideo.com header
+# Mirror型(海外)重定向
+^http(s)?:\/\/upos-(hz|bstar1)-mirrorakam\.akamaized\.net\/upgcxcode https://upos-sz-mirrorcos.bilivideo.com/upgcxcode header
+^http(s)?:\/\/upos-sz-mirror(aliov|cosov|hwov|alibstar1|cosbstar1|hwbstar1)\.bilivideo\.com\/upgcxcode https://upos-sz-mirrorcos.bilivideo.com/upgcxcode header
+# MCDN型重定向
+^http(s)?:\/\/.*\.mcdn\.bilivideo\.(com|cn)\/upgcxcode https://upos-sz-mirrorcos.bilivideo.com/upgcxcode header
+# PCDN型重定向
+^http(s)?:\/\/(\d{1,3}\.){3}\d{1,3}(:[0-9]+)?\/upgcxcode https://upos-sz-mirrorcos.bilivideo.com/upgcxcode header
+# BCache型重定向
+^http(s)?:\/\/cn-.*\.bilivideo\.(com|cn)\/upgcxcode https://upos-sz-mirrorcos.bilivideo.com/upgcxcode header
