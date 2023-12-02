@@ -2,7 +2,10 @@
 #!desc = 重定向CDN,包括海外的以及PCDN[建议配合"哔哩万象"使用]
 
 [General]
-force-http-engine-hosts = %APPEND% upos-hz-mirrorakam.akamaized.net:80,upos-bstar1-mirrorakam.akamaized.net:80,*.bilivideo.cn:80,*.bilivideo.com:80,<ip-address>:4480,<ip-address>:4483
+force-http-engine-hosts = %APPEND% *mcdn.bilivideo.cn:0,*.bilivideo.com:0,<ip-address>:0
+
+[MITM]
+hostname = %APPEND% upos-*-mirrorakam.akamaized.net,*.bilivideo.com:0, *.mcdn.bilivideo.cn:0
 
 [Rule]
 OR,((DOMAIN-KEYWORD,pcdn), (DOMAIN-SUFFIX,szbdyd.com)),REJECT-NO-DROP // 禁用B站PCDN
