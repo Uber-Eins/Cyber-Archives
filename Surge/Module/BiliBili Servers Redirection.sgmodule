@@ -8,7 +8,7 @@ force-http-engine-hosts = %APPEND% *mcdn.bilivideo.cn:0,*.bilivideo.com:0,<ip-ad
 hostname = %APPEND% upos-*-mirrorakam.akamaized.net,*.bilivideo.com:0, *.mcdn.bilivideo.cn:0
 
 [Rule]
-OR,((DOMAIN-KEYWORD,pcdn), (DOMAIN-SUFFIX,szbdyd.com)),REJECT-NO-DROP // 禁用B站PCDN
+OR,((AND,((OR,((DEST-PORT,4480), (DEST-PORT,4483), (DEST-PORT,8000), (DEST-PORT,8082))), (IP-CIDR,0.0.0.0/0,no-resolve))), (DOMAIN-KEYWORD,pcdn), (DOMAIN-SUFFIX,szbdyd.com)),REJECT-NO-DROP // 禁用B站PCDN
 
 [URL Rewrite]
 # Mirror型(海外)重定向
