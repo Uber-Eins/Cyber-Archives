@@ -2,6 +2,11 @@ let url = $request.url;
 let headers = $request.headers;
 
 url.hostname = $argument;
+if (url.protocol === "http:") {
+    url.port = "80";
+} else if (url.protocol === "https:") {
+    url.port = "443";
+}
 
 headers["Host"] = $argument;
 
