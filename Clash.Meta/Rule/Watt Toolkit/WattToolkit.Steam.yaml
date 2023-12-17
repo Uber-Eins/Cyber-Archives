@@ -1,0 +1,18 @@
+# NAME: WattToolkit.Steam
+# BEHAVIOR: DOMAIN
+payload:
+  - 'steam-chat.com'
+  - 'steamcdn-a.akamaihd.net'
+  - 'cdn.akamai.steamstatic.com'
+  - 'community.akamai.steamstatic.com'
+  - 'avatars.akamai.steamstatic.com'
+  - 'community.steamstatic.com'
+  - 'store.akamai.steamstatic.com'
+  - 'media.steampowered.com'
+  - 'steamcommunity.com'
+  - 'www.steamcommunity.com'
+  - 'store.steampowered.com'
+  - 'api.steampowered.com'
+  - 'help.steampowered.com'
+  - 'login.steampowered.com'
+  - 'checkout.steampowered.com'
